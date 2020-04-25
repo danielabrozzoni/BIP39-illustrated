@@ -1,0 +1,8 @@
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(20%);
+}
+
+.container-fluid {
+    height: 100vh;
+}
