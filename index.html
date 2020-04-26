@@ -6,55 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="text/javascript" src="index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="true" data-wrap="false">
         <div class="carousel-inner">
             <div class="carousel-item">
-                <div class="container-fluid text-center">
+                <div class="container text-center">
                     <h1>BIP39 illustrated</h1>
-                    <h5>A visual explanation for BIP-39: how to create a seed starting from ...</h5>
+                    <h5>A visual explanation for BIP-39: how to create a mnemonic starting from a bunch of random bits.</h5>
                 </div>
             </div>
             <div class="carousel-item active">
-                <div class="container-fluid text-center">
+                <div class="container text-center">
                     <p>
                         First of all, we need to generate some random bits, which we'll call "entropy". 
                         <br>
-                        Seeds can be generated from either 128 o 256 bits of entropy, producing x or X words.
+                        Entropy lenght can vary, producing a different number of seed words.
+                        <br>
+                        I want to produce a seed of
+                        <select id="MS_selector" onchange="calculate()">
+                            <option>3</option>
+                            <option>6</option>
+                            <option selected>12</option>
+                            <option>15</option>
+                            <option>18</option>
+                            <option>21</option>
+                            <option>24</option>
+                        </select>
+                        words.
                     </p>
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="container-fluid text-center">
-                    <p>
-                        First of all, we need to generate some random bits, which we'll call "entropy". <br>
-                        Seeds can be generated from either 128 o 256 bits of entropy, producing x or X words.
+                <div class="container text-center">
+                    <p style="word-wrap:break-word">
+                        Since you want to produce <span class="MS"></span>
+                        words, we'll need <span class="ENT"></span> bits of entropy. <br>
+                        <br>
+                        ENT = <span class="ENT"></span>
                         <br>
                         <br>
-                        E = <script>document.write(entropy)</script>
+                        E = <span class="entropy"></span>
                         <br>
                         <br>
-                        Then we need to calculate the checksum of our entropy:
+                        Now we need to calculate the checksum of our entropy:
                         <br>
                         <br>
-                        <script>
-                        let entropySHA = CryptoJS.SHA256(entropy); 
-                        entropySHA = entropySHA.toString(CryptoJS.enc.Hex);
-                        </script>
-                        checksum = SHA256(E) = <script>document.write(entropySHA) </script> =
-                        <div style="word-wrap:break-word">
-                            <script>document.write(parseHexString(entropySHA))</script>
-                        </div>
+                        checksum = SHA256(E) = <span class="entropySHA"></span>
                         <br>
                         <br>
-                        We don't need 256 bit of checksum - the first ENC/32 bits are sufficient.
+                        We don't need 256 bit of checksum - the first ENT/32 bits are enough.
+                        <br>
+                        <br>
+                        ENT/32 = <span class="ENT"></span>/32 = <span class="CS"></span>
+                        <br>
+                        <br>
+                        checksum = first <span class="CS"></span> bits of SHA256(E) = <span class="checksum"></span>
+                        <br>
+                        <br>
+                        We append the checksum to our entropy and we're done!
+                        <br>
+                        <br>
+                        E = E + checksum = <span class="E"></span>
                     </p>
                 </div>
+                <!--Needed in case the user doesn't select a different value for MS_selector-->
+                <script>calculate()</script>
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
